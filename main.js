@@ -16,7 +16,7 @@ async function loadPosts() {
 
         if (posts.length === 0 && page === 1) {
             message.textContent = "Ничего не найдено"
-            loadMoreBtn.classList.add("hidden")
+            loadMoreBtn.classList.add("hidden");
             return
         }
 
