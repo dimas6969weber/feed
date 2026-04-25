@@ -16,12 +16,11 @@ async function loadPosts() {
 
         if (posts.length === 0 && page === 1) {
             message.textContent = "Ничего не найдено"
-            loadMoreBtn.classList.add("hidden")
             return
         }
 
-        if (posts.length < limit) {
-            loadMoreBtn.classList.add("hidden")
+        if(posts.length < limit){
+            observer.unobserve(loadMoreBtn)
         }
 
         posts.forEach(post => {
@@ -38,7 +37,6 @@ async function loadPosts() {
 
     } catch(error) {
         message.textContent = "Что-то пошло не так..."
-        loadMoreBtn.classList.add("hidden")
     }
 }
 
@@ -51,13 +49,11 @@ loadMoreBtn.addEventListener("click", ()=>{
 
 search.addEventListener("input", function(text){
     clearTimeout(timer)
-    
+    observer.observe(loadMoreBtn);
     timer = setTimeout(() =>{
         searchInput = text.target.value
         page = 1
         postContainer.innerHTML = ""
-        loadMoreBtn.classList.remove("hidden") 
-
         loadPosts()
     }, 300)
 })
