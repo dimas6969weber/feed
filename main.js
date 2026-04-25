@@ -16,7 +16,7 @@ async function loadPosts() {
 
         if (posts.length === 0 && page === 1) {
             message.textContent = "Ничего не найдено"
-            loadMoreBtn.classList.add("hidden");
+            loadMoreBtn.classList.add("hidden")
             return
         }
 
@@ -38,7 +38,7 @@ async function loadPosts() {
 
     } catch(error) {
         message.textContent = "Что-то пошло не так..."
-        loadMoreBtn.classList.add("hidden") 
+        loadMoreBtn.classList.add("hidden")
     }
 }
 
@@ -61,3 +61,14 @@ search.addEventListener("input", function(text){
         loadPosts()
     }, 300)
 })
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            page ++
+            loadPosts();
+        }
+    });
+}, {root: null});
+
+observer.observe(loadMoreBtn);
